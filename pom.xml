@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.q91</groupId>
+    <groupId>com.github.apzr</groupId>
     <artifactId>spring-boot-api-restful</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
@@ -17,7 +17,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.13.RELEASE</version>
+        <version>2.1.13.RELEASE</version>
     </parent>
 
     <dependencies>
