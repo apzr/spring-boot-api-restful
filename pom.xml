@@ -4,9 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.q91</groupId>
-    <artifactId>spring-boot-api-restful</artifactId>
-    <version>1.0</version>
+    <groupId>com.yuepong</groupId>
+    <artifactId>order-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>yuepong-order-service</name>
+    <description>Yuepong Order Service</description>
     <packaging>jar</packaging>
 
     <properties>
@@ -17,7 +19,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.13.RELEASE</version>
+        <version>2.1.13.RELEASE</version>
     </parent>
 
     <dependencies>
@@ -96,6 +98,17 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.10</version>
         </dependency>
+        <!-- elastic-job -->
+<!--        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>elastic-job-lite-core</artifactId>
+            <version>${latest.release.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>elastic-job-lite-spring</artifactId>
+            <version>${latest.release.version}</version>
+        </dependency>-->
         <!--代码生成器依赖-->
         <dependency>
             <groupId>org.freemarker</groupId>
