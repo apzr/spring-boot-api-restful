@@ -2,7 +2,7 @@
 # SQLSERVER
 spring:
   datasource:
-    url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=paas-test
+    url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=paas_test
     username: sa
     password: 123456
     encryption: false

@@ -12,8 +12,11 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
-* Created by ${author} on ${date}.
-*/
+ * ${modelNameUpperCamel}Controller
+ *
+ * @author ${author}
+ * @date ${date}
+ */
 @RestController
 @RequestMapping("${baseRequestMapping}")
 public class ${modelNameUpperCamel}Controller {
