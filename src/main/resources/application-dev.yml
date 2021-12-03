@@ -27,3 +27,8 @@ spring:
     schema:
       #- classpath:sql/schema.sql
     platform: sqlserver
+
+
+scheduling:
+    cron:
+      test: "*/5 * * * * ?"
