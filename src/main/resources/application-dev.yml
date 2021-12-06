@@ -31,4 +31,4 @@ spring:
 
 scheduling:
     cron:
-      test: "*/5 * * * * ?"
+      test: "*/30 * * * * ?"

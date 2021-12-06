@@ -18,7 +18,7 @@ import static com.uxlt.project.core.ProjectConstant.*;
  */
 public class CodeGenerator {
     //JDBC配置，请修改为你项目的实际配置
-    private static final String JDBC_URL = "jdbc:sqlserver://127.0.0.1:1433;DatabaseName=jsfyzx";
+    private static final String JDBC_URL = "jdbc:sqlserver://127.0.0.1:1433;DatabaseName=paas_test";
     private static final String JDBC_USERNAME = "sa";
     private static final String JDBC_PASSWORD = "123456";
     private static final String JDBC_DIVER_CLASS_NAME = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -38,7 +38,7 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
 //        genCode("输入表名");
-        genCodeByCustomModelName("act_assignee","ActAssignee");
+        genCodeByCustomModelName("t_user","User");
     }
 
     /**
