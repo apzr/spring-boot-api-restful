@@ -28,6 +28,10 @@ spring:
       #- classpath:sql/schema.sql
     platform: sqlserver
 
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 
 scheduling:
     cron:
