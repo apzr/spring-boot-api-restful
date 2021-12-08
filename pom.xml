@@ -11,10 +11,6 @@
     <description>Yuepong Order Service</description>
     <packaging>jar</packaging>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-
     <!-- Inherit defaults from Spring Boot -->
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -22,8 +18,19 @@
         <version>2.1.13.RELEASE</version>
     </parent>
 
+    <properties>
+        <java.version>1.8</java.version>
+        <druid.version>1.1.22</druid.version>
+        <connector.mysql.version>8.0.19</connector.mysql.version>
+        <connector.sqlserver.version>9.4.0.jre8</connector.sqlserver.version>
+        <mybatis.version>3.4.0</mybatis.version>
+        <mybatis.generator.version>3.5.1</mybatis.generator.version>
+        <freemarker.version>2.3.23</freemarker.version>
+        <swagger.version>2.9.2</swagger.version>
+    </properties>
+
     <dependencies>
-        <!--Spring Boot依赖-->
+        <!--Spring Boot-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -37,7 +44,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--常用库依赖-->
+
+        <!--通用-->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -52,17 +60,36 @@
             <artifactId>guava</artifactId>
             <version>23.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
+
+        <!--阿里 Druid Spring Boot Starter依赖-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
         <!--MySQL JDBC-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>${connector.mysql.version}</version>
             <scope>runtime</scope>
         </dependency>
+
         <!--MSSQL JDBC-->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>9.4.0.jre8</version>
+            <version>${connector.sqlserver.version}</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -70,48 +97,33 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.4.0</version>
+            <version>${mybatis.version}</version>
         </dependency>
         <!--mybatis plus extension,包含了mybatis plus core-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-extension</artifactId>
-            <version>3.4.0</version>
+            <version>${mybatis.version}</version>
         </dependency>
-        <!--阿里 FastJson依赖-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.47</version>
-        </dependency>
-        <!--阿里 Druid Spring Boot Starter依赖-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.22</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <!--代码生成器依赖 mybatis-plus-->
+
+        <!--mybatis-plus-generator-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.5.1</version>
+            <version>${mybatis.generator.version}</version>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.23</version>
+            <version>${freemarker.version}</version>
             <scope>test</scope>
         </dependency>
-        <!--swagger依赖-->
-        <!--  https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
+
+        <!--swagger-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <version>${swagger.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>io.swagger</groupId>
@@ -123,8 +135,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- 解决进入swagger页面报类型转换错误，排除2.9.2中的引用，
-        手动增加1.5.21以上版本，这里选1.6.0版本-->
+        <!-- 解决进入swagger页面报类型转换错误，排除2.9.2中的引用， 手动增加1.5.21以上版本，这里选1.6.0版本-->
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
