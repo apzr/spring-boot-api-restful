@@ -1,5 +1,9 @@
+import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
-import com.baomidou.mybatisplus.generator.config.OutputFile;
+import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.builder.Controller;
+import com.baomidou.mybatisplus.generator.config.builder.Entity;
+import com.baomidou.mybatisplus.generator.config.builder.Mapper;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.Collections;
@@ -23,11 +27,22 @@ public class CodeGenerator {
     private static final String[] TABLES_SUFFIX = {};//后缀
 
     public static void main(String[] args) {
+        fastGenerate(TABLES);
+        //generate("TTT", TABLES);
+    }
+
+    /*
+     * 链式调用
+     *
+     * @author apr
+     * @date 2021/12/8 15:59
+     */
+    private static void fastGenerate(String... tables){
         FastAutoGenerator.create(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD)
                 .globalConfig(builder -> {
                     builder.author(AUTHOR) // 设置作者
                             .enableSwagger() // 开启 swagger 模式
-                            .fileOverride() // 覆盖已生成文件
+                            //.fileOverride() // 覆盖已生成文件
                             .outputDir(PROJECT_PATH+JAVA_PATH); // 指定输出目录
                 })
                 .packageConfig(builder -> {
@@ -36,7 +51,7 @@ public class CodeGenerator {
                             .pathInfo(Collections.singletonMap(OutputFile.mapperXml, PROJECT_PATH+RESOURCES_PATH+"/mapper/")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude(TABLES) // 设置需要生成的表名
+                    builder.addInclude(tables) // 设置需要生成的表名
                             .addTablePrefix(TABLES_PREFIX)// 设置过滤表前缀
                             .addTableSuffix(TABLES_SUFFIX)// 设置过滤表前缀
                             .controllerBuilder().enableRestStyle().enableHyphenStyle()
@@ -56,5 +71,94 @@ public class CodeGenerator {
                 })
         .execute();
     }
+
+    /*
+     * 链式调用
+     *
+     * @author apr
+     * @date 2021/12/8 15:59
+     */
+    //TODO:
+    private static void autoGenerate(String... tables){
+        new AutoGenerator(new DataSourceConfig.Builder(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD).build())
+                .global(null).packageInfo(null)
+                .strategy(null)
+                .template(null)
+        .execute( new FreemarkerTemplateEngine() );
+    }
+
+    /*
+     * 传统写法
+     *
+     * @author apr
+     * @date 2021/12/8 16:00
+     */
+    @Deprecated
+    private static void generate(String moduleName, String[] tableNames){
+        AutoGenerator gen = new AutoGenerator( getDataSourceConfig() );// 数据源配置
+        gen.global( getGlobalConfig() );
+        gen.packageInfo( getPackageConfig(moduleName) );
+        gen.strategy( getStrategyConfig(tableNames) );
+        gen.template( getTemplateConfig() );
+        gen.execute( new FreemarkerTemplateEngine() );//用freemarker引擎
+
+    }
+
+    private static DataSourceConfig getDataSourceConfig() {
+        DataSourceConfig.Builder dataSourceConfigBuilder= new DataSourceConfig.Builder(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
+        return dataSourceConfigBuilder.build();
+    }
+
+    private static GlobalConfig getGlobalConfig() {
+        GlobalConfig.Builder globalConfigBuilder = new GlobalConfig.Builder();
+        globalConfigBuilder.author(AUTHOR); // 设置作者
+        globalConfigBuilder.enableSwagger(); // 开启 swagger 模式
+        globalConfigBuilder.fileOverride(); // 覆盖已生成文件
+        globalConfigBuilder.outputDir(PROJECT_PATH+JAVA_PATH); // 指定输出目录.build();
+
+        return globalConfigBuilder.build();
+    }
+
+    private static PackageConfig getPackageConfig(String moduleName) {
+        PackageConfig.Builder packageConfigBuilder = new PackageConfig.Builder();
+        packageConfigBuilder.parent(PACKAGE_NAME); // 设置父包名
+        packageConfigBuilder.moduleName(moduleName); // 设置父包模块名
+        packageConfigBuilder.pathInfo(Collections.singletonMap(OutputFile.mapperXml, PROJECT_PATH+RESOURCES_PATH+"/mapper/")); // 设置mapperXml生成路径
+
+        return packageConfigBuilder.build();
+    }
+
+    private static TemplateConfig getTemplateConfig() {
+        TemplateConfig.Builder templateConfigBuilder = new TemplateConfig.Builder();
+        templateConfigBuilder.entity("/templates/entity.java");
+        templateConfigBuilder.service("/templates/service.java");
+        templateConfigBuilder.serviceImpl("/templates/serviceImpl.java");
+        templateConfigBuilder.mapper("/templates/mapper.java");
+        templateConfigBuilder.mapperXml("/templates/mapper.xml");
+        templateConfigBuilder.controller("/templates/controller.java");
+
+        return templateConfigBuilder.build();
+    }
+
+    private static StrategyConfig getStrategyConfig(String[] tables) {
+        StrategyConfig.Builder strategyConfigBuilder = new StrategyConfig.Builder();
+        strategyConfigBuilder.addInclude(tables);// 设置需要生成的表名
+        strategyConfigBuilder.addTablePrefix(TABLES_PREFIX);// 设置过滤表前缀
+        strategyConfigBuilder.addTableSuffix(TABLES_SUFFIX);// 设置过滤表前缀
+
+        Controller.Builder controllerBuilder = strategyConfigBuilder.controllerBuilder();
+        controllerBuilder.enableRestStyle();
+        controllerBuilder.enableHyphenStyle();
+
+        Mapper.Builder mapperBuilder = strategyConfigBuilder.mapperBuilder();
+        mapperBuilder.enableMapperAnnotation();
+        
+        Entity.Builder entityBuilder = strategyConfigBuilder.entityBuilder();
+        entityBuilder.enableLombok();
+        entityBuilder.enableTableFieldAnnotation();
+
+        return strategyConfigBuilder.build();
+    }
+
 
 }
