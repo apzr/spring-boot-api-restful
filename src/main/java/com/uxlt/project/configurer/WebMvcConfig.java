@@ -34,7 +34,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Spring MVC 配置
+ * Spring 配置
+ *
+ * @author apr
+ * @date 2021/12/8 14:31
  */
 @Configuration
 @Slf4j

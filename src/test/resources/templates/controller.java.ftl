@@ -94,20 +94,20 @@ public class ${table.controllerName} {
 
     @ApiOperation(value = "列表", notes="分页查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "当前页码，首页码应当为1", defaultValue = "0", paramType = "query"),
-            @ApiImplicitParam(name = "size", value = "页容量，每一页显示的数据条数", defaultValue = "0", paramType = "query"),
-            @ApiImplicitParam(name = "condition", value = "分页查询条件", paramType = "body")
+            @ApiImplicitParam(name = "page", value = "当前页码，首页为1", defaultValue = "1", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "页容量，每一页显示的数据条数", defaultValue = "100", paramType = "query"),
+            @ApiImplicitParam(name = "query", value = "分页查询条件", paramType = "body")
     })
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size,
-                       @RequestBody @ModelAttribute("${entity}") @Nullable ${entity} condition) {
+                       @RequestBody @ModelAttribute("${entity}") @Nullable ${entity} query) {
         Page p = new Page(page, size);
 
-        LambdaQueryWrapper<${entity}> query = null;
-        if(Objects.nonNull(condition))
-            query = Wrappers.lambdaQuery(condition);
+        LambdaQueryWrapper<${entity}> queryParam = null;
+        if(Objects.nonNull(query))
+            queryParam = Wrappers.lambdaQuery(query);
 
-		IPage<${entity}> pageList = userServiceImpl.page(p, query);
+		IPage<${entity}> pageList = userServiceImpl.page(p, queryParam);
 
         return ResultGenerator.genSuccessResult(pageList);
     }
