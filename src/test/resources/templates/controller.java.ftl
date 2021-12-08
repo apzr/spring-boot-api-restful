@@ -99,7 +99,7 @@ public class ${table.controllerName} {
             @ApiImplicitParam(name = "query", value = "分页查询条件", paramType = "body")
     })
     @GetMapping
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size,
+    public Result list(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "100") Integer size,
                        @RequestBody @ModelAttribute("${entity}") @Nullable ${entity} query) {
         Page p = new Page(page, size);
 
