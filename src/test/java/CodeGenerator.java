@@ -1,6 +1,5 @@
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
-import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.Collections;
@@ -46,14 +45,14 @@ public class CodeGenerator {
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .templateConfig( builder -> {
-                    builder.disable(TemplateType.ENTITY)//禁用Entity模板
-                        .entity("/templates/entity.java")
-                        .service("/templates/service.java")
-                        .serviceImpl("/templates/serviceImpl.java")
-                        .mapper("/templates/mapper.java")
-                        .mapperXml("/templates/mapper.xml")
-                        .controller("/templates/controller.java")
-                        .build();
+                    builder.entity("/templates/entity.java")
+                            .service("/templates/service.java")
+                            .serviceImpl("/templates/serviceImpl.java")
+                            .mapper("/templates/mapper.java")
+                            .mapperXml("/templates/mapper.xml")
+                            .controller("/templates/controller.java")
+                            .build();
+                    //builder.disable(TemplateType.ENTITY); //禁用Entity模板
                 })
         .execute();
     }
