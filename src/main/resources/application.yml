@@ -8,4 +8,4 @@ spring:
     add-mappings: false
 
 swagger:
-  enabled: false
+  enabled: true
