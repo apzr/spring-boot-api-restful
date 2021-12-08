@@ -1,6 +1,8 @@
 package ${package.Controller};
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import com.uxlt.project.core.Result;
@@ -9,7 +11,9 @@ import com.uxlt.project.core.ResultGenerator;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
 
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 <#if restControllerStyle>
 import org.springframework.web.bind.annotation.*;
 <#else>
@@ -18,6 +22,9 @@ import org.springframework.stereotype.Controller;
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
 </#if>
+
+import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * <p>
@@ -42,37 +49,66 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 </#if>
 
-    @Autowired
+    @Resource
     private ${table.serviceName}  ${table.serviceImplName?uncap_first};
 
+    @ApiOperation(value = "新增")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "${entity?uncap_first}", value = "待添加的对象", paramType = "body")
+    })
     @PostMapping
-    public Result add(@RequestBody ${entity} ${entity}) {
-        ${table.serviceImplName?uncap_first}.save(${entity});
+    public Result add(@RequestBody @ModelAttribute("${entity}") ${entity} ${entity?uncap_first}) {
+        ${table.serviceImplName?uncap_first}.save(${entity?uncap_first});
         return ResultGenerator.genSuccessResult();
     }
 
+    @ApiOperation(value = "删除")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "待删除的对象的ID", required=true, paramType = "path")
+    })
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable String id) {
         ${table.serviceImplName?uncap_first}.removeById(id);
         return ResultGenerator.genSuccessResult();
     }
 
+    @ApiOperation(value = "更新")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "${entity?uncap_first}", value = "待更新的对象", required=true, paramType = "body")
+    })
     @PutMapping
-    public Result update(@RequestBody ${entity} user) {
-        ${table.serviceImplName?uncap_first}.updateById(user);
+    public Result update(@RequestBody ${entity} ${entity?uncap_first}) {
+        ${table.serviceImplName?uncap_first}.updateById(${entity?uncap_first});
         return ResultGenerator.genSuccessResult();
     }
 
+    @ApiOperation(value = "详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "待查询的对象的ID", required=true, paramType = "path")
+    })
     @GetMapping("/{id}")
     public Result detail(@PathVariable String id) {
-        ${entity} user =  ${table.serviceImplName?uncap_first}.getById(id);
-        return ResultGenerator.genSuccessResult(user);
+        ${entity} ${entity?uncap_first} =  ${table.serviceImplName?uncap_first}.getById(id);
+        return ResultGenerator.genSuccessResult(${entity?uncap_first});
     }
 
+    @ApiOperation(value = "列表", notes="分页查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "当前页码，首页码应当为1", defaultValue = "0", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "页容量，每一页显示的数据条数", defaultValue = "0", paramType = "query"),
+            @ApiImplicitParam(name = "condition", value = "分页查询条件", paramType = "body")
+    })
     @GetMapping
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        Page<User> p = new Page(page, size);
-		IPage<User> pageList = ${table.serviceImplName?uncap_first}.page(p);
+    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size,
+                       @RequestBody @ModelAttribute("${entity}") @Nullable ${entity} condition) {
+        Page p = new Page(page, size);
+
+        LambdaQueryWrapper<${entity}> query = null;
+        if(Objects.nonNull(condition))
+            query = Wrappers.lambdaQuery(condition);
+
+		IPage<${entity}> pageList = userServiceImpl.page(p, query);
+
         return ResultGenerator.genSuccessResult(pageList);
     }
 
