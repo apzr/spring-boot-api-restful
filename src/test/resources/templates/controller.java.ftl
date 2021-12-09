@@ -107,7 +107,7 @@ public class ${table.controllerName} {
         if(Objects.nonNull(query))
             queryParam = Wrappers.lambdaQuery(query);
 
-		IPage<${entity}> pageList = userServiceImpl.page(p, queryParam);
+		IPage<${entity}> pageList = ${table.serviceImplName?uncap_first}.page(p, queryParam);
 
         return ResultGenerator.genSuccessResult(pageList);
     }

@@ -22,9 +22,9 @@ public class CodeGenerator {
     private static final String PACKAGE_NAME = "com.uxlt.project";
     private static final String AUTHOR = "April Z";//@author
 
-    private static final String MODULE_NAME = "my_module";//要生成的表
-    private static final String[] TABLES = {"t_user"};//要生成的表
-    private static final String[] TABLES_PREFIX = {"t_", "c_"};//前缀
+    private static final String MODULE_NAME = "userrrr";//要生成的module
+    private static final String[] TABLES = {};//要生成的表
+    private static final String[] TABLES_PREFIX = {"t_", "c_", "t_bp_"};//前缀
     private static final String[] TABLES_SUFFIX = {};//后缀
 
     public static void main(String[] args) {
@@ -87,6 +87,7 @@ public class CodeGenerator {
                         .enableSwagger()
                         .fileOverride()
                         .outputDir(PROJECT_PATH+JAVA_PATH)
+                        .disableOpenDir()
                         .build())
                 .packageInfo(new PackageConfig.Builder()
                         .parent(PACKAGE_NAME)
