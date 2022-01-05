@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uxlt.project.userrrr.mapper.UserMapper">
+
+    <resultMap id="myUser" type="com.uxlt.project.userrrr.entity.UserUnion">
+        <id column="id" property="id"/>
+        <result column="login_name" property="login_name"/>
+        <result column="email" property="email"/>
+    </resultMap>
+
+    <select id="execute" resultMap="myUser">
+        select t_user.id, UserInfo.login_name, t_user.email from t_user LEFT JOIN UserInfo on t_user.id = UserInfo.id
+    </select>
+</mapper>

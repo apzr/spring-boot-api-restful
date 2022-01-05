@@ -7,6 +7,11 @@ spring:
     password: 123456
     encryption: false
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    url: jdbc:sybase:Tds:192.168.99.172:8001/drp_uat;charset=cp936
+#    username: sa_dnb
+#    password: password #99155562
+#    encryption: false
+#    driver-class-name: com.sybase.jdbc4.jdbc.SybDriver
     type: com.alibaba.druid.pool.DruidDataSource
     initialization-mode: always
     initialSize: 5
@@ -27,6 +32,41 @@ spring:
     schema:
       #- classpath:sql/schema.sql
     platform: sqlserver
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    producer:
+      retries: 3
+      batch-size: 16384
+      buffer-memory: 33554432
+      acks: 127
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: default-groups
+      enable-auto-commit: false
+      auto-offset-reset: earlist
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: manual_immediate
+
+  out-kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    producer:
+      retries: 3
+      batch-size: 16384
+      buffer-memory: 33554432
+      acks: 127
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: default-groups
+      enable-auto-commit: false
+      auto-offset-reset: earlist
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: manual_immediate
 
 mybatis-plus:
   configuration:
